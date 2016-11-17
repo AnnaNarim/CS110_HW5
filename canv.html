@@ -1,0 +1,82 @@
+<canvas id="canvas" width="700" height="500"></canvas>
+
+
+<script>
+
+  
+
+let canvas = document.getElementById("canvas");
+
+let context = canvas.getContext("2d");
+
+
+
+const NUM_POINTS = 5; 
+
+
+const points = [];
+
+for(let i = 0; i < NUM_POINTS; i++) {
+
+  points.push({
+
+    x: Math.random() * (canvas.width-150),
+
+    y: Math.random() * (canvas.height-100),
+
+    width: 150,
+
+    height: 100,
+
+    xDelta: 1,
+
+    yDelta: 1, 
+   
+
+  });
+
+}
+
+
+
+const draw = function() {
+
+ context.clearRect(0,0,canvas.width,canvas.height); 
+
+ points.forEach(function(p){
+
+
+	var img = new Image();
+  	img.src = "carmine-red.png";
+	img.onload = function() {
+		context.drawImage(img, p.x, p.y, p.width, p.height);
+	};
+	
+  p.x+=p.xDelta;
+  p.y+=p.yDelta;
+  if(p.x+p.width>=canvas.width||p.x<=0){
+    p.xDelta*=-1;
+  }
+  if(p.y+p.height>=canvas.height||p.y<=0){
+    p.yDelta*=-1;
+  }
+  
+ });
+};
+
+
+
+let animate = function() {
+
+    draw();
+
+    setTimeout(animate, 1);
+
+};
+
+animate();
+
+
+
+</script>
+
